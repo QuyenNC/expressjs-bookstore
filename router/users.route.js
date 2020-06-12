@@ -61,7 +61,6 @@ router.get('/create',function(req, res){
 router.post('/create',function(req, res){
     req.body.id = shortid.generate();
     db.get('users').push(req.body).write();
-    // res.redirect('index');
     res.render('users/index',{
         users : db.get('users').value()
     });
