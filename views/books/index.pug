@@ -1,0 +1,16 @@
+a(href="/") Back index
+h1 Books Store
+a(href="/books/create") Create Books
+form(action="/books/search", method="GET")
+    input(type="text", name="q",value=q)
+    button Search
+ul 
+    each book in books
+        li
+            span= book.name
+            span &nbsp;&nbsp;
+            a(href="/books/view/" + book.id ) View
+            span &nbsp;&nbsp;
+            a(href="/books/update/" + book.id ) Update
+            span &nbsp;&nbsp;
+            a(href="/books/" + book.id +"/delete") Delete

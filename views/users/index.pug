@@ -1,0 +1,16 @@
+a(href="/") Back index
+h1 List User
+a(href="/users/create") Create Users
+form(action="/users/search", method="GET")
+    input(type="text", name="q",value=q)
+    button Search
+ul 
+    each user in users
+        li
+            span= user.name
+            span &nbsp;&nbsp;
+            a(href="/users/view/" + user.id ) View
+            span &nbsp;&nbsp;
+            a(href="/users/update/" + user.id ) Update
+            span &nbsp;&nbsp;
+            a(href="/users/" + user.id +"/delete") Delete
