@@ -16,6 +16,22 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/',function(req, res){
   res.render('index')
 });
+
+app.get('/transaction/create',function(req, res){
+  res.render('transaction/index',{
+      users : db.get('users').value(),
+      books : db.get('books').value(),
+  });
+});
+
+app.post('/transaction/create',function(req, res){
+  
+  console.log(req.body);
+})
+
+
+
+
 app.use('/users', users);
 app.use('/books', books);
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
