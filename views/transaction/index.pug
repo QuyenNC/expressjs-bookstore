@@ -1,9 +1,28 @@
-h1 Transaction
-form(action="/transaction/create", method="POST")
-    select(name="username")
-        each user in users
-            option= user.name
-    select(name="booksname")
-        each book in books
-            option= book.name 
-    button Create
+
+a(href="/") Back index
+h1 Transactions History
+a(href="/transaction/create") Create Transactions
+br
+table(style="border-spacing: 15px;border: 1px solid black;")
+    
+        tr(style="border: 1px solid black;")
+            th userName    
+            th booksName
+            th Action  
+        
+            each tran in transactions
+                tr
+
+                    td= tran.username
+                    td= tran.booksname
+                    td
+                        a(href="/transaction/view/" + tran.id ) View
+                    td
+                        a(href="/transaction/update/" + tran.id ) Update
+                    td
+                        a(href="/transaction/" + tran.id +"/delete") Delete
+
+            
+            
+
+            

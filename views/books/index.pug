@@ -4,13 +4,18 @@ a(href="/books/create") Create Books
 form(action="/books/search", method="GET")
     input(type="text", name="q",value=q)
     button Search
-ul 
-    each book in books
-        li
-            span= book.name
-            span &nbsp;&nbsp;
-            a(href="/books/view/" + book.id ) View
-            span &nbsp;&nbsp;
-            a(href="/books/update/" + book.id ) Update
-            span &nbsp;&nbsp;
-            a(href="/books/" + book.id +"/delete") Delete
+
+           
+table(style="border-spacing: 15px;border: 1px solid black;")
+    tr(style="border: 1px solid black;")
+        th Bookname
+        th Action
+        each book in books
+             tr
+                td= book.name
+                td
+                    a(href="/books/view/" + book.id ) View
+                td
+                    a(href="/books/update/" + book.id ) Update
+                td
+                    a(href="/books/" + book.id +"/delete") Delete

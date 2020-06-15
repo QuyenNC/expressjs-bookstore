@@ -4,13 +4,19 @@ a(href="/users/create") Create Users
 form(action="/users/search", method="GET")
     input(type="text", name="q",value=q)
     button Search
-ul 
-    each user in users
-        li
-            span= user.name
-            span &nbsp;&nbsp;
-            a(href="/users/view/" + user.id ) View
-            span &nbsp;&nbsp;
-            a(href="/users/update/" + user.id ) Update
-            span &nbsp;&nbsp;
-            a(href="/users/" + user.id +"/delete") Delete
+
+    table(style="border-spacing: 15px;border: 1px solid black;")
+    
+        tr(style="border: 1px solid black;")
+            th Username
+            th Action
+        
+             each user in users
+                tr
+                    td= user.name
+                    td
+                        a(href="/users/view/" + user.id ) View
+                    td
+                        a(href="/users/update/" + user.id ) Update
+                    td
+                        a(href="/users/" + user.id +"/delete") Delete
