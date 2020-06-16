@@ -4,56 +4,23 @@ var router = express.Router();
 var db = require("../db");
 //using shortid
 const shortid = require('shortid');
+//using transactionController
+var transactionControler = require("../controller/transaction.controller");
 
-router.get('/',function(req, res){
-    res.render('transaction/index',{
-      transactions : db.get('transaction').value()
-    })
-  })
-router.get('/create',function(req, res){
-    res.render('transaction/create',{
-        users : db.get('users').value(),
-        books : db.get('books').value(),
-    });
-  });
+router.get('/',transactionControler.index);
+router.get('/create',transactionControler.create);
   
-router.post('/create',function(req, res){
-    req.body.bookId = db.get('books').find({ name: req.body.booksname }).value().id;
-    req.body.userId = db.get('users').find({ name: req.body.username }).value().id;
-    req.body.id = shortid.generate();
-    db.get('transaction').push(req.body).write();
-    res.redirect('/transaction')
-    
-  })
+router.post('/create',transactionControler.postCreate);
   //Route view transaction
-router.get('/view/:id',function(req, res){
-    var id = req.params.id;
-    var tran = db.get('transaction').find({ id: id }).value();
-    res.render('transaction/viewtran',{
-        info: tran
-    });
-  })
+router.get('/view/:id',transactionControler.view);
   //Route delete transaction
-router.get('/:id/delete',function(req, res){
-    var id = req.params.id;
-    var tran = db.get('transaction').remove({id : id}).write();
-    res.redirect('/transaction');
-  })
+router.get('/:id/delete',transactionControler.delete);
   //Route update tran
-router.get('/update/:id',function(req, res){
-    var id = req.params.id;
-    var tran = db.get('transaction').find({ id: id }).value();
-    res.render('transaction/update',{
-        info: tran,
-        trans :  db.get('books').value()
-    });
-  })
-router.post('/update/:id',function(req, res){
-    var id = req.body.id;
-    var booksnameUpdate = req.body.booksname;
-    db.get('transaction').find({ id: id }) .assign({ booksname:booksnameUpdate  }).write();
-    res.redirect('/transaction')
-  });
-  
+router.get('/update/:id',transactionControler.update);
+router.post('/update/:id',transactionControler.postUpdate);
+  //route complete transaction
+router.get('/:id/complete',transactionControler.complete);
+
+router.get('/:id/uncomplete',transactionControler.uncomplete);
 
 module.exports = router;

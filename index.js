@@ -10,17 +10,9 @@ app.set('views', './views');
 var books = require('./router/books.route');
 var users = require('./router/users.route');
 var transactions = require('./router/transaction.route');
-
-//using lowdb
-var db = require("./db");
-const { reduce } = require("./db");
-
 //using req.body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-//using shortid
-const shortid = require('shortid');
 
 //Route show index
 app.get('/',function(req, res){
