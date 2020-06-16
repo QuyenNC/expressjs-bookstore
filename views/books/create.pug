@@ -1,7 +1,10 @@
-h1 Create New Books
-form(action="/books/create", method="POST")
-    label Name
-    input(type="text",name="name")
-    label Description
-    input(type="text",name="description")
-    button Create
+extends ../layout/common 
+block header
+    .container
+        h1 Create New Books
+        form(action="/books/create", method="POST")
+            label Name
+            input(type="text",name="name")
+            label Description
+            input(type="text",name="description")
+            button Create

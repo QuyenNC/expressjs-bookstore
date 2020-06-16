@@ -1,15 +1,14 @@
-h1 Transaction
-form(action="/transaction/create", method="POST")
-    label User
-    select(name="username")
-        each user in users
-            option= user.name
-    br 
-    br 
-    label Book
-    select(name="booksname")
-        each book in books
-            option= book.name 
-    br 
-    br
-    button Create
+extends ../layout/common 
+block header
+    .container
+        h1 Transaction
+        form(action="/transaction/create", method="POST")
+            label User
+            select(name="username")
+                each user in users
+                    option= user.name
+            label Book
+            select(name="booksname")
+                each book in books
+                    option= book.name 
+            button Create

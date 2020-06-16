@@ -1,8 +1,11 @@
-h1 Update data book
-form(action="/users/update/:id",method="POST")
-    label Name
-    input(type="text", name="name",value=info.name)
-    label Ngày sinh
-    input(type="date", name="date",value=info.date)
-    input(type="hidden", name="id", value=info.id)
-    button Update
+extends ../layout/common 
+block header    
+    .container
+        h1 Update data book
+        form(action="/users/update/:id",method="POST")
+            label Name
+            input(type="text", name="name",value=info.name)
+            label Ngày sinh
+            input(type="date", name="date",value=info.date)
+            input(type="hidden", name="id", value=info.id)
+            button Update

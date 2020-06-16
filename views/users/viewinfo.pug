@@ -1,5 +1,7 @@
-a(href="/users") Back Menu
-h1 Name
-p= info.name
-h1 Ngày Sinh
-p= info.date
+extends ../layout/common 
+block header    
+    .container
+        h1 Name
+        p= info.name
+        h1 Ngày Sinh
+        p= info.date
