@@ -1,3 +1,4 @@
-*{
-    font-size: 25px;;
-}
+* { 
+    display: none !important;
+    /* font-size: 25px; */
+ }
