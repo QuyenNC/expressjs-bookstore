@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
-const port = 3000
+const port = 3000;
+
+
 
 //using pug
 app.set('view engine', 'pug');
@@ -13,11 +15,13 @@ var transactions = require('./router/transaction.route');
 //using req.body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+//Public static file
+app.use(express.static('public'));
 //Route show index
 app.get('/',function(req, res){
   res.render('index')
 });
+
 
 app.use('/transaction',transactions);
 app.use('/users', users);
