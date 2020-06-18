@@ -47,10 +47,20 @@ module.exports = {
         req.body.id = shortid.generate();
         db.get('transaction').push(req.body).write();
         res.redirect('/transaction')
-        console.log(req.body);
     },
     complete : function(req, res){
         var id = req.params.id;
+        var errors = [];
+        if(db.get('transaction').find({ id: id }).value() === undefined){
+            errors.push("Transaction is required")
+        }
+        if(errors.length){
+          res.render('transaction/index',{
+            transactions : db.get('transaction').value(),
+            errors : errors
+          })
+          return;
+        }
         db.get('transaction').find({ id: id }).assign({ isComplete: true  }).write();
         res.redirect('/transaction')
     },

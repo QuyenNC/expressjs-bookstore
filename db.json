@@ -19,29 +19,27 @@
   "users": [
     {
       "name": "Nguyễn Công Quyền",
-      "date": "2020-06-10",
-      "id": "Jkmh6kLQZ"
+      "password": "123456",
+      "email": "nguyencongquyen13214@gmail.com",
+      "date": "2000-02-13",
+      "id": "qvdBk0dfr"
     },
     {
-      "name": "Nguyễn Thị Thủy Tiên",
-      "date": "2020-06-04",
-      "id": "KRDc_GUmG"
+      "name": "Thủy Tiên",
+      "password": "123456",
+      "email": "thuytien13214@gmail.com",
+      "date": "2000-04-01",
+      "id": "f1qesBEbC"
     },
     {
       "name": "Hoàng Quân",
-      "date": "2020-06-02",
-      "id": "Fke40SQQa"
+      "password": "123456",
+      "email": "quyenncps10942@fpt.edu.vn",
+      "date": "2020-06-09",
+      "id": "r5hu8Q3zv"
     }
   ],
   "transaction": [
-    {
-      "username": "Nguyễn Công Quyền",
-      "booksname": "Conan Phiên Bản 2020",
-      "bookId": "ywqq8TOMZ",
-      "userId": "Jkmh6kLQZ",
-      "id": "sZVoCsyU-",
-      "isComplete": false
-    },
     {
       "username": "Nguyễn Thị Thủy Tiên",
       "booksname": "Doremon",

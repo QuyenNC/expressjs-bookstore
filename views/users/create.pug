@@ -2,9 +2,22 @@ extends ../layout/common
 block header
     .container
         h1 Create New Users
-        form(action="/users/create", method="POST")
-            label Name
-            input(type="text",name="name")
-            label Ngày Sinh
-            input(type="date",name="date")
-            button Create
+        form(action='/users/create', method='POST')
+            if erros
+                each erro in erros
+                    .alert.alert-danger= erro
+            .form-row
+                .form-group.col-md-6
+                    label(for='name') Username
+                    input#name.form-control(type='text',name="name",value = values ? values.name : "")
+                .form-group.col-md-6
+                    label(for='password') Password
+                    input#password.form-control(type='password',name="password" value = values ? values.password : "")
+                .form-group.col-md-6
+                    label(for='email') Email
+                    input#email.form-control(type='email', placeholder='abc132@gmail.com',name="email" value = values ? values.email : "")
+                .form-group.col-md-6
+                    label(for="date") Date
+                    input#date.form-control(type="date",name="date" value = values ? values.date : "")
+            button.btn.btn-primary Create
+            

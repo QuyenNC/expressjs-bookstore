@@ -1,21 +1,21 @@
 extends ../layout/common 
 block header       
         .container
-                h1 Update data book
+                h1 Update transaction
                 form(action="/transaction/update/:id",method="POST")
-                label Username &nbsp;
-                span :&nbsp;
-                select(name="username")
-                        option= info.username
-                br 
-                br
-                label Booksname &nbsp;
-                span :&nbsp;
-                select(name="booksname")
-                        option= info.booksname 
-                        each tran in trans
-                                option= tran.name
-                br 
-                br 
-                input(type="hidden", name="id", value=info.id)
-                button Update
+                        label Username &nbsp;
+                        span :&nbsp;
+                        select(name="username")
+                                option= info.username
+                        br 
+                        br
+                        label Booksname &nbsp;
+                        span :&nbsp;
+                        select(name="booksname")
+                                option= info.booksname 
+                                each tran in trans
+                                        option= tran.name
+                        br 
+                        br 
+                        input(type="hidden", name="id", value=info.id)
+                        button Update

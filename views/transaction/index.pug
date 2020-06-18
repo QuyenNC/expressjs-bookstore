@@ -4,15 +4,16 @@ block header
         h1 Transactions History
         a(href="/transaction/create") Create Transactions
         br
+        if errors
+            each err in errors
+                .alert.alert-danger= err
         table(style="border-spacing: 15px;border: 1px solid black;")
-            
                 tr(style="border: 1px solid black;")
                     th Username    
                     th Booksname
                     th Complete
                     th Action  
-                
-                    each tran in transactions
+                    each tran in transactions  
                         tr
                             td= tran.username
                             td= tran.booksname
@@ -32,7 +33,6 @@ block header
                             else 
                                 td 
                                     a(href="/transaction/" + tran.id +"/complete") Complete
-                    
                     
 
                     
