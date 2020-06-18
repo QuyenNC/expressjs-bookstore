@@ -54,29 +54,6 @@ module.exports = {
     },
     postCreate: function(req, res){
         req.body.id = shortid.generate();
-        var erros = [];
-        if(!req.body.name  ){
-            erros.push('Username is required');
-        }
-        if(req.body.name.length > 30 ){
-            erros.push('Username is greater than 30 characters')
-        }
-        if(!req.body.password){
-            erros.push('Password is required');
-        }
-        if(!req.body.email){
-            erros.push('Email is required');
-        }
-        if(!req.body.date){
-            erros.push('Date is required');
-        }
-        if(erros.length){
-            res.render('users/create',{
-                erros : erros,
-                values : req.body
-            });
-            return;
-        }
         db.get('users').push(req.body).write();
         res.render('users/index',{
             users : db.get('users').value()

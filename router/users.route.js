@@ -6,7 +6,8 @@ var db = require("../db");
 var shortid = require('shortid');
 //using userController
 var userControler = require("../controller/user.controller");
-
+//usin validate
+var validateCreateUser = require("../validate/users.validate")
 router.get('/',userControler.index);
 router.get("/search",userControler.search);
 //Route view users
@@ -19,6 +20,6 @@ router.post('/update/:id',userControler.postUpdate);
 //Route create users
 router.get('/create',userControler.create);
 
-router.post('/create',userControler.postCreate);
+router.post('/create',validateCreateUser.valPostCreate, userControler.postCreate);
 
 module.exports = router;
