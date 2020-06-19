@@ -1,38 +1,40 @@
 extends ../layout/common 
 block header
     .container
-        h1 Transactions History
-        a(href="/transaction/create") Create Transactions
-        br
+        .d-flex.align-items-center.justify-content-between
+            h1 Transactions History
+            a.ml-4.mr-4.btn.btn-primary(href="/transaction/create") Create Transactions
         if errors
             each err in errors
                 .alert.alert-danger= err
-        table(style="border-spacing: 15px;border: 1px solid black;")
-                tr(style="border: 1px solid black;")
-                    th Username    
-                    th Booksname
-                    th Complete
-                    th Action  
-                    each tran in transactions  
-                        tr
-                            td= tran.username
-                            td= tran.booksname
-                            if tran.isComplete === true
-                                td Đã trả sách
-                            else 
-                                td Đang mượn
-                            td
-                                a(href="/transaction/view/" + tran.id ) View
-                            td
-                                a(href="/transaction/update/" + tran.id ) Update
-                            td
-                                a(href="/transaction/" + tran.id +"/delete") Delete
-                            if tran.isComplete === true
-                                td 
-                                    a(href="/transaction/" + tran.id +"/uncomplete") Uncomplete
-                            else 
-                                td 
-                                    a(href="/transaction/" + tran.id +"/complete") Complete
+        table.table
+            thead
+                tr
+                    th(scope="col") Username    
+                    th(scope="col") Booksname
+                    th(scope="col") Complete
+                    th(scope="col") Action  
+            tbody
+                each tran in transactions  
+                    tr
+                        td= tran.username
+                        td= tran.booksname
+                        if tran.isComplete === true
+                            td Đã trả sách
+                        else 
+                            td Đang mượn
+                        td
+                            a.mr-3.btn.btn-secondary(href="/transaction/view/" + tran.id ) View
+                        td
+                            a.mr-3.btn.btn-secondary(href="/transaction/update/" + tran.id ) Update
+                        td
+                            a.mr-3.btn.btn-secondary(href="/transaction/" + tran.id +"/delete") Delete
+                        if tran.isComplete === true
+                            td 
+                                a.mr-3.btn.btn-secondary(href="/transaction/" + tran.id +"/uncomplete") Uncomplete
+                        else 
+                            td 
+                                a.mr-3.btn.btn-secondary(href="/transaction/" + tran.id +"/complete") Complete
                     
 
                     

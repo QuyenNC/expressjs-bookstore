@@ -1,24 +1,26 @@
 extends ../layout/common 
 block header
     .container
-        h1 Books Store
-        a(href="/books/create") Create Books
-        form(action="/books/search", method="GET",class="form-group")
-            .d-flex.justify-content-between
-                label(style="width:10%") Tìm kiếm
-                input(type="text", name="q",value=q,class="form-control" id="exampleInputEmail1",style="width:80%")
-                button.btn.btn-primary Search
-            table.table
-                tr 
+        .d-flex.align-items-center.justify-content-between
+            h1 Books Store
+            a.ml-4.mr-4.btn.btn-primary(href="/books/create") Create Books
+        form.d-flex.justify-content-center(action="/books/search", method="GET")
+                input.form-control(type="text", name="q",value=q,)
+                button.ml-2.btn.btn-outline-success Search
+        table.table
+            thead
+                tr
                     th(scope="col") Bookname
+                    th(scope="col") Description
                     th(scope="col") Action
-                    each book in books
-                        tr  
-                            td= book.name
-                            td
-                                a(href="/books/view/" + book.id ) View
-                            td
-                                a(href="/books/update/" + book.id ) Update
-                            td
-                                a(href="/books/" + book.id +"/delete") Delete    
+            tbody
+                each book in books
+                    tr  
+                        td= book.name
+                        td= book.description
+                        td
+                            a.mr-3.btn.btn-secondary(href="/books/view/" + book.id ) View
+                            a.mr-3.btn.btn-secondary(href="/books/update/" + book.id ) Update
+                            a.mr-3.btn.btn-secondary(href="/books/" + book.id +"/delete") Delete   
+                     
 
