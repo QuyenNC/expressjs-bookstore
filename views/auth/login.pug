@@ -1,0 +1,14 @@
+extends ../layout/common 
+block header
+    .container
+        form(method="POST")
+            if erros
+                each erro in erros
+                    .alert.alert-danger= erro
+            .form-group
+                label(for='exampleInputEmail1') Email address
+                input#exampleInputEmail1.form-control(type='email',name="email", placeholder='Enter email',value = values ? values.email : "")
+            .form-group
+                label(for='exampleInputPassword1') Password
+                input#exampleInputPassword1.form-control(type='password',name="password", placeholder='Password',value = values ? values.password : "")
+            button.btn.btn-primary(type='submit') Login

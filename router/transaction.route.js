@@ -6,23 +6,22 @@ var db = require("../db");
 const shortid = require('shortid');
 //using transactionController
 var transactionControler = require("../controller/transaction.controller");
-//count cookie
-var cookies = require("../cookie/count.cookie");
 
-router.get('/',cookies.countCookie,transactionControler.index);
-router.get('/create',cookies.countCookie,transactionControler.create);
+
+router.get('/',transactionControler.index);
+router.get('/create',transactionControler.create);
   
-router.post('/create',cookies.countCookie,transactionControler.postCreate);
+router.post('/create',transactionControler.postCreate);
   //Route view transaction
-router.get('/view/:id',cookies.countCookie,transactionControler.view);
+router.get('/view/:id',transactionControler.view);
   //Route delete transaction
-router.get('/:id/delete',cookies.countCookie,transactionControler.delete);
+router.get('/:id/delete',transactionControler.delete);
   //Route update tran
-router.get('/update/:id',cookies.countCookie,transactionControler.update);
-router.post('/update/:id',cookies.countCookie,transactionControler.postUpdate);
+router.get('/update/:id',transactionControler.update);
+router.post('/update/:id',transactionControler.postUpdate);
   //route complete transaction
-router.get('/:id/complete',cookies.countCookie,transactionControler.complete);
+router.get('/:id/complete',transactionControler.complete);
 
-router.get('/:id/uncomplete',cookies.countCookie,transactionControler.uncomplete);
+router.get('/:id/uncomplete',transactionControler.uncomplete);
 
 module.exports = router;

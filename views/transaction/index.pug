@@ -1,6 +1,5 @@
 extends ../layout/common 
 block header
-    .container
         .d-flex.align-items-center.justify-content-between
             h1 Transactions History
             a.ml-4.mr-4.btn.btn-primary(href="/transaction/create") Create Transactions
@@ -15,26 +14,39 @@ block header
                     th(scope="col") Complete
                     th(scope="col") Action  
             tbody
-                each tran in transactions  
-                    tr
-                        td= tran.username
-                        td= tran.booksname
-                        if tran.isComplete === true
-                            td Đã trả sách
-                        else 
-                            td Đang mượn
-                        td
-                            a.mr-3.btn.btn-secondary(href="/transaction/view/" + tran.id ) View
-                        td
-                            a.mr-3.btn.btn-secondary(href="/transaction/update/" + tran.id ) Update
-                        td
-                            a.mr-3.btn.btn-secondary(href="/transaction/" + tran.id +"/delete") Delete
-                        if tran.isComplete === true
-                            td 
-                                a.mr-3.btn.btn-secondary(href="/transaction/" + tran.id +"/uncomplete") Uncomplete
-                        else 
-                            td 
-                                a.mr-3.btn.btn-secondary(href="/transaction/" + tran.id +"/complete") Complete
-                    
+                if users.isAdmin === true
+                    each tran in transactionsAdmin 
+                        tr
+                            td= tran.username
+                            td= tran.booksname
+                            if tran.isComplete === true
+                                td Đã trả sách
+                            else 
+                                td Đang mượn
+                                td
+                                    a.mr-3.btn.btn-secondary(href="/transaction/view/" + tran.id ) View
+                                td
+                                    a.mr-3.btn.btn-secondary(href="/transaction/update/" + tran.id ) Update
+                                td
+                                    a.mr-3.btn.btn-secondary(href="/transaction/" + tran.id +"/delete") Delete
+                                if tran.isComplete === true
+                                    td 
+                                        a.mr-3.btn.btn-secondary(href="/transaction/" + tran.id +"/uncomplete") Uncomplete
+                                else 
+                                    td 
+                                        a.mr-3.btn.btn-secondary(href="/transaction/" + tran.id +"/complete") Complete
+                else 
+                    each tran in transactionsUser
+                        tr
+                            td= tran.username
+                            td= tran.booksname
+                            if tran.isComplete === true
+                                td Đã trả sách
+                            else 
+                                td Đang mượn
+                                td
+                                    a.mr-3.btn.btn-secondary(href="/transaction/view/" + tran.id ) View
+                                td
+                                    a.mr-3.btn.btn-secondary(href="/transaction/update/" + tran.id ) Update
 
                     

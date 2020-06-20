@@ -10,14 +10,32 @@ html
         nav.navbar.navbar-expand-lg.navbar-light.bg-light
             .collapse.navbar-collapse#navbarNav
                 ul(class="navbar-nav")
-                    li(class="nav-item active")
-                        a.navbar-brand
-                            img(src="/image/favicon.ico",width="30" ,height="30")
-                    li(class="nav-item active")
-                        a(class="nav-link",href="/books") Books 
-                    li(class="nav-item active")
-                        a(class="nav-link",href="/users")   User
-                    li(class="nav-item active")
-                        a(class="nav-link",href="/transaction") Transaction
-    
-block header
+                    if !users
+                        li(class="nav-item active")
+                            a.navbar-brand
+                                img(src="/image/favicon.ico",width="30" ,height="30")
+                        li(class="nav-item active")
+                            a(class="nav-link",href="/books") Books 
+                        li(class="nav-item active")
+                            a(class="nav-link",href="/users")   User
+                        li(class="nav-item active")
+                            a(class="nav-link",href="/transaction") Transaction
+                    else 
+                        if users.isAdmin === false
+                            li(class="nav-item active")
+                                    a.navbar-brand
+                                        img(src="/image/favicon.ico",width="30" ,height="30")
+                            li(class="nav-item active")
+                                a(class="nav-link",href="/transaction") Transaction
+                        else 
+                            li(class="nav-item active")
+                                a.navbar-brand
+                                    img(src="/image/favicon.ico",width="30" ,height="30")
+                            li(class="nav-item active")
+                                a(class="nav-link",href="/books") Books 
+                            li(class="nav-item active")
+                                a(class="nav-link",href="/users")   User
+                            li(class="nav-item active")
+                                a(class="nav-link",href="/transaction") Transaction
+    .container
+        block header

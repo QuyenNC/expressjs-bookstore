@@ -8,20 +8,19 @@ var shortid = require('shortid');
 var userControler = require("../controller/user.controller");
 //using validate
 var validateCreateUser = require("../validate/users.validate")
-//count cookie
-var cookies = require("../cookie/count.cookie");
 
-router.get('/',cookies.countCookie,userControler.index);
-router.get("/search",cookies.countCookie,userControler.search);
+
+router.get('/',userControler.index);
+router.get("/search",userControler.search);
 //Route view users
-router.get('/view/:id',cookies.countCookie,userControler.view)
+router.get('/view/:id',userControler.view)
 //Route delete users
-router.get('/:id/delete',cookies.countCookie,userControler.delete)
+router.get('/:id/delete',userControler.delete)
 //Route update users
-router.get('/update/:id',cookies.countCookie,userControler.update)
-router.post('/update/:id',cookies.countCookie,userControler.postUpdate);
+router.get('/update/:id',userControler.update)
+router.post('/update/:id',userControler.postUpdate);
 //Route create users
-router.get('/create',cookies.countCookie,userControler.create);
+router.get('/create',userControler.create);
 
 router.post('/create',validateCreateUser.valPostCreate, userControler.postCreate);
 

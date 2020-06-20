@@ -6,21 +6,19 @@ var db = require("../db");
 const shortid = require('shortid');
 //using bookController
 var bookControler = require("../controller/book.controller");
-//count cookie
-var cookies = require("../cookie/count.cookie");
 
-router.get('/',cookies.countCookie,bookControler.index);
-router.get("/search",cookies.countCookie,bookControler.search);
+router.get('/',bookControler.index);
+router.get("/search",bookControler.search);
 //Route view book
-router.get('/view/:id',cookies.countCookie,bookControler.view);
+router.get('/view/:id',bookControler.view);
 //Route delete book
-router.get('/:id/delete',cookies.countCookie,bookControler.delete);
+router.get('/:id/delete',bookControler.delete);
 //Route update book
-router.get('/update/:id',cookies.countCookie,bookControler.update);
-router.post('/update/:id',cookies.countCookie,bookControler.postUpdate);
+router.get('/update/:id',bookControler.update);
+router.post('/update/:id',bookControler.postUpdate);
 //Route create books
-router.get('/create',cookies.countCookie,bookControler.create);
+router.get('/create',bookControler.create);
 
-router.post('/create',cookies.countCookie,bookControler.postCreate);
+router.post('/create',bookControler.postCreate);
 
 module.exports = router;

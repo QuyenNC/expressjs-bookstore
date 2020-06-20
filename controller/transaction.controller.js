@@ -5,8 +5,13 @@ var shortid = require('shortid');
 
 module.exports = {
     index : function(req, res){
+        
         res.render('transaction/index',{
-          transactions : db.get('transaction').value()
+          transactionsUser: db.get('transaction').value().filter(function(x){
+            return x.userId === req.cookies.userId;
+          }),
+          transactionsAdmin: db.get('transaction').value(),
+          users : db.get('users').find({id : req.cookies.userId}).value()
         })
       },
     view : function(req, res){
@@ -37,7 +42,7 @@ module.exports = {
       },
     create : function(req, res){
         res.render('transaction/create',{
-            users : db.get('users').value(),
+            users : db.get('users').find({id : req.cookies.userId}).value(),
             books : db.get('books').value(),
         });
       },
