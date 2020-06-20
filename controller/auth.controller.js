@@ -1,5 +1,7 @@
 //using lowdb
 var db = require("../db");
+//usin md5 
+var md5 = require('md5');
 module.exports = {
     login :function(req, res){
         res.render('auth/login');
@@ -18,7 +20,7 @@ module.exports = {
             return;
         }
 
-        if(user.password !== password){
+        if(user.password !== md5(password)){
             res.render('auth/login',{
                 erros : [
                     "Mật khẩu không đúng"
