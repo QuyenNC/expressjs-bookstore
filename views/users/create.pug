@@ -18,5 +18,6 @@ block header
                 .form-group.col-md-6
                     label(for="date") Date
                     input#date.form-control(type="date",name="date" value = values ? values.date : "")
+                    inpu(type="hidden",value = 0,name="wrongLoginCount")           
             button.btn.btn-primary Create
             
