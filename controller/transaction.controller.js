@@ -8,10 +8,10 @@ module.exports = {
         
         res.render('transaction/index',{
           transactionsUser: db.get('transaction').value().filter(function(x){
-            return x.userId === req.cookies.userId;
+            return x.userId === req.signedCookies.userId;
           }),
           transactionsAdmin: db.get('transaction').value(),
-          users : db.get('users').find({id : req.cookies.userId}).value()
+          users : db.get('users').find({id : req.signedCookies.userId}).value()
         })
       },
     view : function(req, res){
@@ -42,7 +42,7 @@ module.exports = {
       },
     create : function(req, res){
         res.render('transaction/create',{
-            users : db.get('users').find({id : req.cookies.userId}).value(),
+            users : db.get('users').find({id : req.req.signedCookies.userId}).value(),
             books : db.get('books').value(),
         });
       },

@@ -1,11 +1,11 @@
 var db = require("../db");
+var cookieParser = require('cookie-parser');
 module.exports.authRequest = function(req, res, next){
-    var user = db.get('users').find({id : req.cookies.userId}).value();
-    if(!req.cookies.userId){
+    if(!req.signedCookies.userId){
         res.redirect('/auth/login');
         return;
     }
-    
+    var user = db.get('users').find({id : req.signedCookies.userId}).value();
     if(!user){
         res.redirect('/auth/login');
         return;

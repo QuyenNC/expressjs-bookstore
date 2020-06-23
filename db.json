@@ -33,7 +33,7 @@
       "date": "2000-04-01",
       "id": "PfdUROVmT",
       "isAdmin": false,
-      "wrongLoginCount": 33
+      "wrongLoginCount": 37
     },
     {
       "name": "Hoàng Quân",
@@ -45,11 +45,13 @@
       "wrongLoginCount": 0
     },
     {
-      "name": "Công Quý",
-      "password": "$2b$10$ob2aJjBVsWMeXreXuOTXKOHhOiDFsKXWw/RbWeohzjeXMNYxRIJaa",
-      "email": "quynguyen13214@gmail.com",
-      "date": "2020-06-22",
-      "id": "89r3hXvzP"
+      "name": "Thu Huyền",
+      "password": "$2b$10$DXSwxBJLU4sM9ajDm2oBDeVcfypHfypfX5HEtISds/of4vfO0Blsq",
+      "email": "thuhuyen13214@gmail.com",
+      "date": "2020-06-05",
+      "id": "B2S2B-8dM",
+      "isAdmin": false,
+      "wrongLoginCount": 0
     }
   ],
   "transaction": [
@@ -116,5 +118,5 @@
       "id": "pSHSX_U1H"
     }
   ],
-  "countCookieRequets": 1143
+  "countCookieRequets": 1198
 }

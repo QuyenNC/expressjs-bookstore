@@ -3,7 +3,7 @@ const app = express();
 const port = 3000;
 //using cookies
 var cookieParser = require('cookie-parser')
-app.use(cookieParser())
+app.use(cookieParser("asd1asdf5a3sd"))
 //using pug
 app.set('view engine', 'pug');
 app.set('views', './views');
@@ -25,7 +25,7 @@ var authRequest = require('./cookie/auth.middleware');
 //Route show index
 app.get('/',function(req, res){
   res.render('layout/common',{
-    users : db.get('users').find({id :req.cookies.userId }).value()
+    users : db.get('users').find({id :req.signedCookies.userId }).value()
   });
 });
 app.use('/transaction',authRequest.authRequest,cookies.countCookie,transactions);
