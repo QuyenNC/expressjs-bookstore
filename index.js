@@ -1,9 +1,13 @@
+//using dotenv
+require('dotenv').config();
+
+
 const express = require("express");
 const app = express();
 const port = 3000;
 //using cookies
 var cookieParser = require('cookie-parser')
-app.use(cookieParser("asd1asdf5a3sd"))
+app.use(cookieParser(process.env.SESSION_SECRET))
 //using pug
 app.set('view engine', 'pug');
 app.set('views', './views');
@@ -12,6 +16,9 @@ var books = require('./router/books.route');
 var users = require('./router/users.route');
 var transactions = require('./router/transaction.route');
 var auth = require('./router/auth.route');
+//using nodemail
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 //using req.body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

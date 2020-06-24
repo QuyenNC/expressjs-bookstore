@@ -1,3 +1,7 @@
+//using dotenv
+require('dotenv').config();
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 //using lowdb
 var db = require("../db");
 //usin md5 
@@ -24,6 +28,28 @@ module.exports = {
             return;
         }
             if(wrongPassword > 4){
+                var transporter = nodemailer.createTransport(smtpTransport({
+                    service: 'gmail',
+                    host: 'smtp.gmail.com',
+                    auth: {
+                        user: process.env.SESSION_USER,
+                        pass: process.env.SESSION_PASS
+                    }
+                }));
+                var mailOptions = {
+                    from:  process.env.SESSION_USER,
+                    to: user.email,
+                    subject: 'Wrong password !!',
+                    text: 'Bạn đã nhập sai ' + wrongPassword+ 'lần liên tục'
+                };
+                transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                    
+                });
                 res.render('auth/login',{
                     erros : [
                         "Bạn nhập sai mất khẩu quá nhiều"
@@ -43,13 +69,12 @@ module.exports = {
                         });
                         console.log(wrongPassword);
                         user.wrongLoginCount +=1;
-                        wrongPassword +=1;
+                        wrongPassword +=1; // ở đây khi + lên mình chek rồi gửi mail luôn
                         return; 
                     }else{
                         wrongPassword =0;
                     }
             }
-            
         res.cookie('userId',user.id,{
             signed : true
         });
