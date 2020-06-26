@@ -10,8 +10,12 @@ var shortid = require('shortid');
 
 module.exports = {
     index : function(req, res){
+        var page = parseInt(req.query.page) || 1;
+        var perPage = 8;
+        var start = (page - 1) * perPage;
+        var end = page * perPage;
         res.render('users/index',{
-            users : db.get('users').value()
+            users : db.get('users').value().slice(start,end)
         });
       },
     search : function(req, res){

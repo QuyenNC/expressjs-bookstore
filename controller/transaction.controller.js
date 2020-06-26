@@ -5,12 +5,20 @@ var shortid = require('shortid');
 
 module.exports = {
     index : function(req, res){
-        
+      var page = parseInt(req.query.page) || 1;
+      var perPage = 8;
+      var start = (page - 1) * perPage;
+      var end = page * perPage;
+
+      var transactionsUser = db.get('transaction').value()
+      .filter(function(x){
+        return x.userId === req.signedCookies.userId;
+      });
+      var transactionsAdmin = db.get('transaction').value();
+
         res.render('transaction/index',{
-          transactionsUser: db.get('transaction').value().filter(function(x){
-            return x.userId === req.signedCookies.userId;
-          }),
-          transactionsAdmin: db.get('transaction').value(),
+          transactionsUser: transactionsUser.slice(start, end),
+          transactionsAdmin: transactionsAdmin.slice(start, end),
           users : db.get('users').find({id : req.signedCookies.userId}).value()
         })
       },
@@ -42,7 +50,7 @@ module.exports = {
       },
     create : function(req, res){
         res.render('transaction/create',{
-            users : db.get('users').find({id : req.req.signedCookies.userId}).value(),
+            users : db.get('users').find({id : req.signedCookies.userId}).value(),
             books : db.get('books').value(),
         });
       },

@@ -40,7 +40,7 @@ module.exports = {
                     from:  process.env.SESSION_USER,
                     to: user.email,
                     subject: 'Wrong password !!',
-                    text: 'Bạn đã nhập sai ' + wrongPassword+ 'lần liên tục'
+                    text: `Bạn đã nhập sai ${wrongPassword}lần liên tục`
                 };
                 transporter.sendMail(mailOptions, function(error, info){
                     if (error) {
