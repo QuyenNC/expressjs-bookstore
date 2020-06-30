@@ -26,7 +26,8 @@ module.exports = {
         var id = req.params.id;
         var tran = db.get('transaction').find({ id: id }).value();
         res.render('transaction/viewtran',{
-            info: tran
+            info: tran,
+            users : db.get('users').find({id : req.signedCookies.userId}).value()
         });
       },
     delete : function(req, res){
@@ -39,7 +40,8 @@ module.exports = {
         var tran = db.get('transaction').find({ id: id }).value();
         res.render('transaction/update',{
             info: tran,
-            trans :  db.get('books').value()
+            trans :  db.get('books').value(),
+            users : db.get('users').find({id : req.signedCookies.userId}).value()
         });
       },
     postUpdate : function(req, res){
@@ -52,6 +54,7 @@ module.exports = {
         res.render('transaction/create',{
             users : db.get('users').find({id : req.signedCookies.userId}).value(),
             books : db.get('books').value(),
+            users : db.get('users').find({id : req.signedCookies.userId}).value()
         });
       },
     postCreate: function(req, res){

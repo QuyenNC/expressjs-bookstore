@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = 5000;
 //using cookies
 var cookieParser = require('cookie-parser')
 app.use(cookieParser(process.env.SESSION_SECRET))
@@ -16,6 +16,7 @@ var books = require('./router/books.route');
 var users = require('./router/users.route');
 var transactions = require('./router/transaction.route');
 var auth = require('./router/auth.route');
+var profile = require('./router/profile.route');
 //using nodemail
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
@@ -39,4 +40,5 @@ app.use('/transaction',authRequest.authRequest,cookies.countCookie,transactions)
 app.use('/users',authRequest.authRequest,cookies.countCookie,users);
 app.use('/books',authRequest.authRequest,cookies.countCookie,books);
 app.use('/auth',cookies.countCookie,auth);
+app.use('/profile',cookies.countCookie,profile);
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));

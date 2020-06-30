@@ -1,0 +1,67 @@
+extends ../layout/common 
+block header   
+    .container.bootstrap.snippet
+        form#registrationForm.form(action='/profile/update', method='post',enctype="multipart/form-data")
+            .row
+                .col-sm-10
+                    h1 Profile User
+            .row
+                .col-sm-3
+                    .text-center
+                        img.avatar.img-circle.img-thumbnail(src = users ? users.avatarUrl : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png', alt='avatar',width = "128",height="128")
+                        input.text-center.center-block.file-upload(type='file',name="avatar")
+                br
+                // /col-3
+                .col-sm-9
+                    ul.nav.nav-tabs
+                        li.active
+                            a(data-toggle='tab', href='#home') Home
+                        
+                    .tab-content
+                        #home.tab-pane.active
+                            .form-group
+                                .col-xs-6
+                                    label(for='name')
+                                        h4 Username
+                                    input#first_name.form-control(type='text', name='name',value = users ? users.name : "", title='enter your first name if any.')
+                            .form-group
+                                .col-xs-6
+                                    label(for='date')
+                                        h4 Date
+                                    input#last_name.form-control(type='date', name='date', value = users ? users.date : "", title='enter your last name if any.')
+                            //- .form-group
+                            //-     .col-xs-6
+                            //-         label(for='phone')
+                            //-             h4 Phone
+                            //-         input#phone.form-control(type='text', name='phone', placeholder='enter phone', title='enter your phone number if any.')
+                            //- .form-group
+                            //-     .col-xs-6
+                            //-         label(for='mobile')
+                            //-             h4 Mobile
+                            //-         input#mobile.form-control(type='text', name='mobile', placeholder='enter mobile number', title='enter your mobile number if any.')
+                            .form-group
+                                .col-xs-6
+                                    label(for='email')
+                                        h4 Email
+                                    input#email.form-control(type='email', name='email', value = users ? users.email : "", title='enter your email.')
+                            //- .form-group
+                            //-     .col-xs-6
+                            //-         label(for='email')
+                            //-             h4 Location
+                            //-         input#location.form-control(type='email', placeholder='somewhere', title='enter a location')
+                            //- .form-group
+                            //-     .col-xs-6
+                            //-         label(for='password')
+                            //-             h4 Password
+                            //-         input#password.form-control(type='password', name='password', placeholder='password', title='enter your password.')
+                            //- .form-group
+                            //-     .col-xs-6
+                            //-         label(for='password2')
+                            //-             h4 Verify
+                            //-         input#password2.form-control(type='password', name='password2', placeholder='password2', title='enter your password2.')
+                            .form-group
+                                .col-xs-12
+                                    br
+                                    button.btn.btn-lg.btn-success(type='submit')
+                                        i.glyphicon.glyphicon-ok-sign
+                                        |  Save

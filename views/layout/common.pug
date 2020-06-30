@@ -5,6 +5,7 @@ html
         link(rel="shortcut icon",href="/image/favicon.ico",type="image/x-icon")
         link(rel="icon",href="/image/favicon.icon",type="image/x-icon")
         link(rel="stylesheet",href="/style/custom.css")
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
     body
     .container
         nav.navbar.navbar-expand-lg.navbar-light.bg-light
@@ -27,6 +28,8 @@ html
                                         img(src="/image/favicon.ico",width="30" ,height="30")
                             li(class="nav-item active")
                                 a(class="nav-link",href="/transaction") Transaction
+                            li(class="nav-item active")
+                                a(class="nav-link",href="/profile") Profile
                         else 
                             li(class="nav-item active")
                                 a.navbar-brand
@@ -37,5 +40,7 @@ html
                                 a(class="nav-link",href="/users")   User
                             li(class="nav-item active")
                                 a(class="nav-link",href="/transaction") Transaction
+                            li(class="nav-item active")
+                                a(class="nav-link",href="/profile") Profile
     .container
         block header

@@ -10,7 +10,6 @@ block header
                 thead
                     tr
                         th(scope='col') Username
-                        th(scope='col') Password
                         th(scope='col') Email
                         th(scope='col') Date
                         th(scope='col') action
@@ -18,7 +17,6 @@ block header
                     each user in users
                         tr
                             td= user.name
-                            td= user.password
                             td= user.email
                             td= user.date
                             td

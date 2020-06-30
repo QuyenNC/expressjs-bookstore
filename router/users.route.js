@@ -11,6 +11,7 @@ var validateCreateUser = require("../validate/users.validate")
 
 
 router.get('/',userControler.index);
+
 router.get("/search",userControler.search);
 //Route view users
 router.get('/view/:id',userControler.view)
@@ -23,5 +24,6 @@ router.post('/update/:id',userControler.postUpdate);
 router.get('/create',userControler.create);
 
 router.post('/create',validateCreateUser.valPostCreate, userControler.postCreate);
+
 
 module.exports = router;
