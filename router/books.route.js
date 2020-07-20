@@ -4,6 +4,9 @@ var router = express.Router();
 var db = require("../db");
 //using shortid
 const shortid = require('shortid');
+//using multer
+var multer  = require('multer')
+var upload = multer({ dest: './public/uploads/' })
 //using bookController
 var bookControler = require("../controller/book.controller");
 
@@ -19,6 +22,6 @@ router.post('/update/:id',bookControler.postUpdate);
 //Route create books
 router.get('/create',bookControler.create);
 
-router.post('/create',bookControler.postCreate);
+router.post('/create', upload.single('coverImg'),bookControler.postCreate);
 
 module.exports = router;

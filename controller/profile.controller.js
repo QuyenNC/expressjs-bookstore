@@ -17,14 +17,14 @@ var shortid = require('shortid');
 module.exports = {
     index : function(req, res){
         res.render('profile/index',{
-          users : db.get('users').find({id : req.signedCookies.userId}).value()
+          users : db.get('users').find({id : req.signedCookies.userId}).value(),
+          session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
         });
     },
     postUpdate : async function(req, res){
-      var avatarUrl = await cloudinary.uploader.upload(req.file.path, 
-        function(error, result) {});
+      var avatarUrl = await cloudinary.uploader.upload(req.file.path);
       db.get('users').find({ id:req.signedCookies.userId  }) .assign({ name:req.body.name , date:req.body.date, email:req.body.email, avatarUrl:avatarUrl.url}).write();
       fs.unlinkSync(req.file.path);
-      res.redirect('/transaction')
+      res.redirect('/profile')
     }
 }

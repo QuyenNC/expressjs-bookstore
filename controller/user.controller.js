@@ -15,7 +15,8 @@ module.exports = {
         var start = (page - 1) * perPage;
         var end = page * perPage;
         res.render('users/index',{
-            users : db.get('users').value().slice(start,end)
+            users : db.get('users').value().slice(start,end),
+            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
         });
       },
     search : function(req, res){
@@ -25,28 +26,32 @@ module.exports = {
         });
         res.render('users/index',{
             users : matchedusers,
-            q : q
+            q : q,
+            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
         });
     },
     view : function(req, res){
         var id = req.params.id;
         var book = db.get('users').find({ id: id }).value();
         res.render('users/viewinfo',{
-            info: book
+            info: book,
+            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
         });
     },
     delete : function(req, res){
         var id = req.params.id;
         var book = db.get('users').remove({id : id}).write();
         res.render('users/index',{
-            users : db.get('users').value()
+            users : db.get('users').value(),
+            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
         });
     },
     update : function(req, res){
         var id = req.params.id;
         var user = db.get('users').find({ id: id }).value();
         res.render('users/update',{
-            info: user
+            info: user,
+            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
         });
     },
     postUpdate : function(req, res){
@@ -55,7 +60,8 @@ module.exports = {
         var dateUpdate = req.body.date
         db.get('users').find({ id: id }) .assign({ name:nameUpdate , date:dateUpdate}).write();
         res.render('users/index',{
-            users : db.get('users').value()
+            users : db.get('users').value(),
+            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
         });
     },
     create : function(req, res){

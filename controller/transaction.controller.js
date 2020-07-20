@@ -9,17 +9,16 @@ module.exports = {
       var perPage = 8;
       var start = (page - 1) * perPage;
       var end = page * perPage;
-
       var transactionsUser = db.get('transaction').value()
       .filter(function(x){
         return x.userId === req.signedCookies.userId;
       });
       var transactionsAdmin = db.get('transaction').value();
-
         res.render('transaction/index',{
           transactionsUser: transactionsUser.slice(start, end),
           transactionsAdmin: transactionsAdmin.slice(start, end),
-          users : db.get('users').find({id : req.signedCookies.userId}).value()
+          users : db.get('users').find({id : req.signedCookies.userId}).value(),
+          session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
         })
       },
     view : function(req, res){
@@ -27,7 +26,8 @@ module.exports = {
         var tran = db.get('transaction').find({ id: id }).value();
         res.render('transaction/viewtran',{
             info: tran,
-            users : db.get('users').find({id : req.signedCookies.userId}).value()
+            users : db.get('users').find({id : req.signedCookies.userId}).value(),
+            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
         });
       },
     delete : function(req, res){
@@ -41,7 +41,8 @@ module.exports = {
         res.render('transaction/update',{
             info: tran,
             trans :  db.get('books').value(),
-            users : db.get('users').find({id : req.signedCookies.userId}).value()
+            users : db.get('users').find({id : req.signedCookies.userId}).value(),
+            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
         });
       },
     postUpdate : function(req, res){
@@ -51,19 +52,19 @@ module.exports = {
         res.redirect('/transaction')
       },
     create : function(req, res){
-        res.render('transaction/create',{
-            users : db.get('users').find({id : req.signedCookies.userId}).value(),
-            books : db.get('books').value(),
-            users : db.get('users').find({id : req.signedCookies.userId}).value()
-        });
+      var userName = db.get('users').find({id : req.signedCookies.userId}).value().name;
+      var userId = db.get('users').find({id : req.signedCookies.userId}).value().id;
+      var booksName = db.get('sesstion').find({id : req.signedCookies.sessionId}).value();
+        for(var idBook in booksName.cart ){
+          var id = shortid.generate();
+          var pro = db.get('books').find({id : idBook}).value();
+          var bookName = pro.name;
+          db.get('transaction').push({id: id, userName: userName, userId: userId, booksName : bookName, countBook : booksName.cart[idBook]}).write();
+          delete booksName.cart[idBook];
+        }
+        db.get('sesstion').find({id : req.signedCookies.sessionId}).value().numberOfBook = 0;
+      res.redirect('/')
       },
-    postCreate: function(req, res){
-        req.body.bookId = db.get('books').find({ name: req.body.booksname }).value().id;
-        req.body.userId = db.get('users').find({ name: req.body.username }).value().id;
-        req.body.id = shortid.generate();
-        db.get('transaction').push(req.body).write();
-        res.redirect('/transaction')
-    },
     complete : function(req, res){
         var id = req.params.id;
         var errors = [];

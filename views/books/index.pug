@@ -1,4 +1,4 @@
-extends ../layout/common 
+extends ../layout/header 
 block header
         .d-flex.align-items-center.justify-content-between
             h1 Books Store
@@ -10,12 +10,15 @@ block header
             thead
                 tr
                     th(scope="col") Bookname
+                    th(scope="col") Image
                     th(scope="col") Description
                     th(scope="col") Action
             tbody
                 each book in books
                     tr  
-                        td= book.name
+                        td= book.name 
+                        td 
+                            img(src= book.coverUrl , width="128", height="64")
                         td= book.description
                         td
                             a.mr-3.btn.btn-secondary(href="/books/view/" + book.id ) View

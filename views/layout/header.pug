@@ -11,31 +11,47 @@ html
         nav.navbar.navbar-expand-lg.navbar-light.bg-light
             .collapse.navbar-collapse#navbarNav
                 ul(class="navbar-nav")
-                    if !users
+                    if session === undefined
                         li(class="nav-item active")
-                            a.navbar-brand
+                            a.navbar-brand(href="/")
                                 img(src="/image/favicon.ico",width="30" ,height="30")
                         li(class="nav-item active")
-                            a(class="nav-link",href="/books") Books 
+                            a(class="nav-link",href="/") Home
                         li(class="nav-item active")
-                            a(class="nav-link",href="/users")   User
+                            a(class="nav-link",href="/cart") Cart 
                         li(class="nav-item active")
-                            a(class="nav-link",href="/transaction") Transaction
+                            a(class="nav-link",href="/auth/login") Login
+                    if !users
+                        li(class="nav-item active")
+                            a.navbar-brand(href="/")
+                                img(src="/image/favicon.ico",width="30" ,height="30")
+                        li(class="nav-item active")
+                            a(class="nav-link",href="/") Home
+                        li(class="nav-item active")
+                            a(class="nav-link",href="/cart") Cart (#{session.numberOfBook})
+                        li(class="nav-item active")
+                            a(class="nav-link",href="/auth/login") Login
                     else 
                         if users.isAdmin === false
                             li(class="nav-item active")
-                                    a.navbar-brand
+                                    a.navbar-brand(href="/")
                                         img(src="/image/favicon.ico",width="30" ,height="30")
                             li(class="nav-item active")
+                                a(class="nav-link",href="/") Home
+                            li(class="nav-item active")
                                 a(class="nav-link",href="/transaction") Transaction
+                            li(class="nav-item active")
+                                a(class="nav-link",href="/cart") Cart (#{session.numberOfBook})
                             li(class="nav-item active")
                                 a(class="nav-link",href="/profile") Profile
                         else 
                             li(class="nav-item active")
-                                a.navbar-brand
+                                a.navbar-brand(href="/")
                                     img(src="/image/favicon.ico",width="30" ,height="30")
                             li(class="nav-item active")
                                 a(class="nav-link",href="/books") Books 
+                            li(class="nav-item active")
+                                a(class="nav-link",href="/cart") Cart (#{session.numberOfBook})
                             li(class="nav-item active")
                                 a(class="nav-link",href="/users")   User
                             li(class="nav-item active")

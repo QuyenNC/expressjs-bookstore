@@ -1,8 +1,7 @@
-extends ../layout/common 
+extends ../layout/header 
 block header
         .d-flex.align-items-center.justify-content-between
             h1 Transactions History
-            a.ml-4.mr-4.btn.btn-primary(href="/transaction/create") Create Transactions
         if errors
             each err in errors
                 .alert.alert-danger= err
@@ -11,14 +10,16 @@ block header
                 tr
                     th(scope="col") Username    
                     th(scope="col") Booksname
+                    th(scope="col") Số lượng
                     th(scope="col") Complete
                     th(scope="col") Action  
             tbody
                 if users.isAdmin === true
                     each tran in transactionsAdmin 
                         tr
-                            td= tran.username
-                            td= tran.booksname
+                            td= tran.userName
+                            td= tran.booksName
+                            td= tran.countBook
                             if tran.isComplete === true
                                 td Đã trả sách
                             else 
@@ -38,8 +39,9 @@ block header
                 else 
                     each tran in transactionsUser
                         tr
-                            td= tran.username
-                            td= tran.booksname
+                            td= tran.userName
+                            td= tran.booksName
+                            td= tran.countBook
                             if tran.isComplete === true
                                 td Đã trả sách
                             else 
@@ -62,5 +64,3 @@ block header
                                     a.page-link(href='/transaction?page=3', value ="3",name="page") 3
                                 li.page-item
                                     a.page-link(href='#') Next
-
-                    

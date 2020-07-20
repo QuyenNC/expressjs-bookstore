@@ -12,7 +12,9 @@ var saltRounds = 10;
 var wrongPassword = 0 ;
 module.exports = {
     login :function(req, res){
-        res.render('auth/login');
+        res.render('auth/login',{
+            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
+        });
     },
     postLogin:async function(req, res){
         var email = req.body.email;

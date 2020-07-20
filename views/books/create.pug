@@ -1,9 +1,37 @@
-extends ../layout/common 
+extends ../layout/header 
 block header
-        h1 Create New Books
-        form(action="/books/create", method="POST")
-            label Name
-            input(type="text",name="name")
-            label Description
-            input(type="text",name="description")
-            button Create
+    .container.bootstrap.snippet
+        form#registrationForm.form(action="/books/create", method="POST",enctype="multipart/form-data")
+            .row
+                .col-sm-10
+                    h1 Create Book
+            .row
+                .col-sm-3
+                    .text-center
+                        img.avatar.img-circle.img-thumbnail.mb-5(src ='http://ssl.gstatic.com/accounts/ui/avatar_2x.png', alt='avatar',width = "128",height="128")
+                        input.text-center.center-block.file-upload.ml-5(type='file',name="coverImg")
+                br
+                // /col-3
+                .col-sm-9
+                    ul.nav.nav-tabs
+                        li.active
+                            a(data-toggle='tab', href='#home') Home
+                        
+                    .tab-content
+                        #home.tab-pane.active
+                            .form-group
+                                .col-xs-6
+                                    label(for='name')
+                                        h4 Bookname
+                                    input#first_name.form-control(type='text', name='name' title='enter your first name if any.')
+                            .form-group
+                                .col-xs-6
+                                    label(for='description')
+                                        h4 Description
+                                    input#email.form-control(type='text', name='description', title='enter your email.')
+                            .form-group
+                                .col-xs-12
+                                    br
+                                    button.btn.btn-lg.btn-success(type='submit')
+                                        i.glyphicon.glyphicon-ok-sign
+                                        |  Create

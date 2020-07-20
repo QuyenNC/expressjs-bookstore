@@ -10,8 +10,6 @@ var transactionControler = require("../controller/transaction.controller");
 
 router.get('/',transactionControler.index);
 router.get('/create',transactionControler.create);
-  
-router.post('/create',transactionControler.postCreate);
   //Route view transaction
 router.get('/view/:id',transactionControler.view);
   //Route delete transaction
