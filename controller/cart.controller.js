@@ -11,8 +11,7 @@ module.exports = {
         }
         res.render('cart/index',{
           session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value(),
-          product : cart,
-          users : db.get('users').find({id : req.signedCookies.userId}).value()
+          product : cart
         });
     },
     addToCart: function(req, res, next){

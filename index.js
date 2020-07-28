@@ -1,10 +1,11 @@
 //using dotenv
 require('dotenv').config();
-
-
 const express = require("express");
 const app = express();
 const port = 7000;
+//usin mongoose
+const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGO_URL);
 //using cookies
 var cookieParser = require('cookie-parser')
 app.use(cookieParser(process.env.SESSION_SECRET))

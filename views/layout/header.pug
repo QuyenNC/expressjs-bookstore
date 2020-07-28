@@ -11,16 +11,6 @@ html
         nav.navbar.navbar-expand-lg.navbar-light.bg-light
             .collapse.navbar-collapse#navbarNav
                 ul(class="navbar-nav")
-                    if session === undefined
-                        li(class="nav-item active")
-                            a.navbar-brand(href="/")
-                                img(src="/image/favicon.ico",width="30" ,height="30")
-                        li(class="nav-item active")
-                            a(class="nav-link",href="/") Home
-                        li(class="nav-item active")
-                            a(class="nav-link",href="/cart") Cart 
-                        li(class="nav-item active")
-                            a(class="nav-link",href="/auth/login") Login
                     if !users
                         li(class="nav-item active")
                             a.navbar-brand(href="/")
@@ -28,7 +18,7 @@ html
                         li(class="nav-item active")
                             a(class="nav-link",href="/") Home
                         li(class="nav-item active")
-                            a(class="nav-link",href="/cart") Cart (#{session.numberOfBook})
+                            a(class="nav-link",href="/cart") Cart 
                         li(class="nav-item active")
                             a(class="nav-link",href="/auth/login") Login
                     else 

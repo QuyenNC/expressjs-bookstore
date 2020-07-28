@@ -4,6 +4,8 @@ var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 //using lowdb
 var db = require("../db");
+//using mongoose
+var Users = require("../models/users.models.js");
 //usin md5 
 var md5 = require('md5');
 //using bcrypt
@@ -20,6 +22,9 @@ module.exports = {
         var email = req.body.email;
         var password = req.body.password;
         var user = db.get('users').find({email : email}).value();
+        console.log(user);
+        // var user = await Users.findOne({email : email}).exec();
+        // console.log(user);
         if(!user){
             res.render('auth/login',{
                 erros : [
@@ -69,9 +74,8 @@ module.exports = {
                             ],
                             values : req.body
                         });
-                        console.log(wrongPassword);
                         user.wrongLoginCount +=1;
-                        wrongPassword +=1; // ở đây khi + lên mình chek rồi gửi mail luôn
+                        wrongPassword +=1; 
                         return; 
                     }else{
                         wrongPassword =0;
