@@ -1,15 +1,14 @@
-var db = require("../db");
-//using shortid
-var shortid = require('shortid');
+
+//using mongoose
+var Sessions = require("../models/sessions.models.js");
 var cookieParser = require('cookie-parser');
-module.exports.shoppingCart = function(req, res, next){
+module.exports.shoppingCart = async function(req, res, next){
     if(!req.signedCookies.sessionId){
-        sessionId = shortid.generate();
-        res.cookie('sessionId',sessionId,{
+        var session =  await Sessions.create({numberOfBook: 0,cart:{}});
+        res.cookie('sessionId',session._id,{
             signed : true
         });
-        db.get('sesstion').push({id :sessionId }).write();
-        db.get('sesstion').find({id : sessionId}).set('numberOfBook' , 0).write();
+        session.save();
     }
     next();
 };

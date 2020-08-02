@@ -22,6 +22,15 @@ block header
                             td= tran.countBook
                             if tran.isComplete === true
                                 td Đã trả sách
+                                td
+                                    a.mr-3.btn.btn-secondary(href="/transaction/view/" + tran.id ) View
+                                td
+                                    a.mr-3.btn.btn-secondary(href="/transaction/update/" + tran.id ) Update
+                                td
+                                    a.mr-3.btn.btn-secondary(href="/transaction/" + tran.id +"/delete") Delete
+                                if tran.isComplete === true
+                                    td 
+                                        a.mr-3.btn.btn-secondary(href="/transaction/" + tran.id +"/uncomplete") Uncomplete
                             else 
                                 td Đang mượn
                                 td
@@ -50,17 +59,17 @@ block header
                                     a.mr-3.btn.btn-secondary(href="/transaction/view/" + tran.id ) View
                                 td
                                     a.mr-3.btn.btn-secondary(href="/transaction/update/" + tran.id ) Update
-                nav(aria-label='Page navigation example')
-                    form(action="", method="get")
-                        td
-                            ul.pagination
-                                li.page-item
-                                    a.page-link(href='/transaction?page=1') Previous
-                                li.page-item
-                                    a.page-link(href='/transaction?page=1', value ="1",name="page") 1
-                                li.page-item
-                                    a.page-link(href='/transaction?page=2', value ="2",name="page") 2
-                                li.page-item
-                                    a.page-link(href='/transaction?page=3', value ="3",name="page") 3
-                                li.page-item
-                                    a.page-link(href='#') Next
+                //- nav(aria-label='Page navigation example')
+                //-     form(action="", method="get")
+                //-         td
+                //-             ul.pagination
+                //-                 li.page-item
+                //-                     a.page-link(href='/transaction?page=1') Previous
+                //-                 li.page-item
+                //-                     a.page-link(href='/transaction?page=1', value ="1",name="page") 1
+                //-                 li.page-item
+                //-                     a.page-link(href='/transaction?page=2', value ="2",name="page") 2
+                //-                 li.page-item
+                //-                     a.page-link(href='/transaction?page=3', value ="3",name="page") 3
+                //-                 li.page-item
+                //-                     a.page-link(href='#') Next

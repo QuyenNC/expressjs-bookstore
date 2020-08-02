@@ -1,5 +1,9 @@
 //using lowdb
 var db = require("../db");
+//using mongoose
+var Books = require("../models/books.models");
+var Users = require("../models/users.models.js");
+var Sessions =require("../models/sessions.models");
 //using md5
 var md5 = require("md5");
 //using bcrypt
@@ -9,19 +13,18 @@ var saltRounds = 10;
 var shortid = require('shortid');
 
 module.exports = {
-    index : function(req, res){
-        var page = parseInt(req.query.page) || 1;
-        var perPage = 8;
-        var start = (page - 1) * perPage;
-        var end = page * perPage;
+    index : async function(req, res){
+        var users = await Users.find();
+        var sessions = await Sessions.findById(req.signedCookies.sessionId);
         res.render('users/index',{
-            users : db.get('users').value().slice(start,end),
-            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
+            users : users,
+            session : sessions
         });
       },
-    search : function(req, res){
+    search : async function(req, res){
         var q = req.query.q;
-        var matchedusers = db.get('users').value().filter(function(x){
+        var users = await Users.find();
+        var matchedusers = users.filter(function(x){
             return x.name.toLowerCase().indexOf(q.toLowerCase()) !== -1;
         });
         res.render('users/index',{
@@ -30,52 +33,52 @@ module.exports = {
             session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
         });
     },
-    view : function(req, res){
+    view : async function(req, res){
+        var sessions = await Sessions.findById(req.signedCookies.sessionId);
         var id = req.params.id;
-        var book = db.get('users').find({ id: id }).value();
+        var users = await Users.find();
+        var user = await Users.findById(id);
         res.render('users/viewinfo',{
-            info: book,
-            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
+            info: user,
+            users:users,
+            session : sessions
         });
     },
-    delete : function(req, res){
+    delete :async function(req, res){
         var id = req.params.id;
-        var book = db.get('users').remove({id : id}).write();
-        res.render('users/index',{
-            users : db.get('users').value(),
-            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
-        });
+        await Users.deleteOne({_id : id});
+        res.redirect('/users');
     },
-    update : function(req, res){
+    update : async function(req, res){
         var id = req.params.id;
-        var user = db.get('users').find({ id: id }).value();
+        var users = await Users.find();
+        var user = await Users.findById(id);
+        var sessions = await Sessions.findById(req.signedCookies.sessionId);
         res.render('users/update',{
             info: user,
-            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
+            users: users,
+            session : sessions
         });
     },
-    postUpdate : function(req, res){
+    postUpdate : async function(req, res){
         var id = req.body.id;
         var nameUpdate = req.body.name;
         var dateUpdate = req.body.date
-        db.get('users').find({ id: id }) .assign({ name:nameUpdate , date:dateUpdate}).write();
-        res.render('users/index',{
-            users : db.get('users').value(),
-            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
-        });
+        // db.get('users').find({ id: id }) .assign({ name:nameUpdate , date:dateUpdate}).write();
+        await Users.updateOne({_id : id},{ name:nameUpdate , date:dateUpdate});
+        res.redirect('/users');
     },
     create : function(req, res){
         res.render('users/create');
     },
-    postCreate: function(req, res){
-        req.body.id = shortid.generate();
+    postCreate: async function(req, res){
         req.body.isAdmin = false;
         req.body.wrongLoginCount = 0;
-        bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+        req.body.countRequets = 0;
+        bcrypt.hash(req.body.password, saltRounds, async function(err, hash) {
             req.body.password = hash
-            db.get('users').push(req.body).write();
+            await Users.insertMany(req.body);
         });
-        console.log(req.body);
-        res.redirect('/users')
+        res.redirect('/users');
     }
 }

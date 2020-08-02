@@ -2,10 +2,10 @@
 require('dotenv').config();
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
-//using lowdb
-var db = require("../db");
 //using mongoose
 var Users = require("../models/users.models.js");
+var Sessions = require("../models/sessions.models.js");
+
 //usin md5 
 var md5 = require('md5');
 //using bcrypt
@@ -13,18 +13,16 @@ var bcrypt = require('bcrypt');
 var saltRounds = 10;
 var wrongPassword = 0 ;
 module.exports = {
-    login :function(req, res){
+    login :async function(req, res){
+        var sessions = await Sessions.findById(req.signedCookies.sessionId)
         res.render('auth/login',{
-            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
+            session : sessions
         });
     },
     postLogin:async function(req, res){
         var email = req.body.email;
         var password = req.body.password;
-        var user = db.get('users').find({email : email}).value();
-        console.log(user);
-        // var user = await Users.findOne({email : email}).exec();
-        // console.log(user);
+        var user = await Users.findOne({email : email}).exec();
         if(!user){
             res.render('auth/login',{
                 erros : [
@@ -81,7 +79,7 @@ module.exports = {
                         wrongPassword =0;
                     }
             }
-        res.cookie('userId',user.id,{
+        res.cookie('userId',user._id,{
             signed : true
         });
         res.redirect('/');

@@ -32,16 +32,26 @@ var seesionMiddleware = require('./cookie/cart.middleware');
 app.use(seesionMiddleware.shoppingCart);
 //Using lowdb
 var db = require('./db')
+//using mongoose
+var Books = require("./models/books.models");
+var Users = require("./models/users.models.js");
+var Sessions = require("./models/sessions.models.js");
 //Count cookies
 var cookies = require('./cookie/count.cookie');
 app.use(cookies.countCookie);
 var authRequest = require('./cookie/auth.middleware');
+//rest api
+var apiLogin = require('./api/routes/login.route');
+var apiTran = require('./api/routes/transactions.route');
 //Route show index
-app.get('/',function(req, res){
+app.get('/',async function(req, res){
+  var books = await Books.find();
+  var user = await Users.findById(req.signedCookies.userId);
+  var sessions = await Sessions.findById(req.signedCookies.sessionId);
   res.render('index',{
-    session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value(),
-    books: db.get('books').value(),
-    users : db.get('users').find({id : req.signedCookies.userId}).value()
+    session : sessions,
+    books: books,
+    users : user
   });
 });
 app.use('/transaction',authRequest.authRequest,transactions);
@@ -50,4 +60,5 @@ app.use('/books',books);
 app.use('/auth',auth);
 app.use('/profile',authRequest.authRequest,profile);
 app.use('/cart',cart);
+app.use('/api',apiTran)
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));

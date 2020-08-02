@@ -5,13 +5,13 @@ block header
                         label Username &nbsp;
                         span :&nbsp;
                         select(name="username")
-                                option= info.username
+                                option= info.userName
                         br 
                         br
                         label Booksname &nbsp;
                         span :&nbsp;
                         select(name="booksname")
-                                option= info.booksname 
+                                option= info.booksName 
                                 each tran in trans
                                         option= tran.name
                         br 

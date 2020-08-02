@@ -1,89 +1,99 @@
 //using lowdb
 var db = require("../db");
+//using mongoose
+var Books = require("../models/books.models");
+var Users = require("../models/users.models.js");
+var Transactions = require("../models/transactions.models.js");
+var Sessions =require("../models/sessions.models");
 //using shortid
 var shortid = require('shortid');
 
 module.exports = {
-    index : function(req, res){
-      var page = parseInt(req.query.page) || 1;
-      var perPage = 8;
-      var start = (page - 1) * perPage;
-      var end = page * perPage;
-      var transactionsUser = db.get('transaction').value()
+    index : async function(req, res){
+      var user = await Users.findById(req.signedCookies.userId);
+      var transactions= await Transactions.find();
+      var sessions = await Sessions.findById(req.signedCookies.sessionId);
+      var transactionsUser = transactions
       .filter(function(x){
         return x.userId === req.signedCookies.userId;
       });
-      var transactionsAdmin = db.get('transaction').value();
+      var transactionsAdmin = transactions;
         res.render('transaction/index',{
-          transactionsUser: transactionsUser.slice(start, end),
-          transactionsAdmin: transactionsAdmin.slice(start, end),
-          users : db.get('users').find({id : req.signedCookies.userId}).value(),
-          session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
+          transactionsUser: transactionsUser,
+          transactionsAdmin: transactionsAdmin,
+          users : user,
+          session :sessions
         })
       },
-    view : function(req, res){
+    view : async function(req, res){
         var id = req.params.id;
-        var tran = db.get('transaction').find({ id: id }).value();
+        var tran = await Transactions.findById(id);
+        var sessions = await Sessions.findById(req.signedCookies.sessionId);
+        var user =await Users.findById(req.signedCookies.userId);
         res.render('transaction/viewtran',{
             info: tran,
-            users : db.get('users').find({id : req.signedCookies.userId}).value(),
-            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
+            users : user,
+            session : sessions
         });
       },
-    delete : function(req, res){
+    delete : async function(req, res){
         var id = req.params.id;
-        var tran = db.get('transaction').remove({id : id}).write();
+        await Transactions.deleteOne({_id : id});
         res.redirect('/transaction');
       },
-    update : function(req, res){
+    update : async function(req, res){
         var id = req.params.id;
-        var tran = db.get('transaction').find({ id: id }).value();
+        var tran = await Transactions.findById(id);
+        var book = await Books.find();
+        var user = await Users.findById(req.signedCookies.userId);
+        var sessions = await Sessions.findById(req.signedCookies.sessionId);
         res.render('transaction/update',{
             info: tran,
-            trans :  db.get('books').value(),
-            users : db.get('users').find({id : req.signedCookies.userId}).value(),
-            session : db.get('sesstion').find({id : req.signedCookies.sessionId}).value()
+            trans :  book,
+            users : user,
+            session : sessions
         });
       },
-    postUpdate : function(req, res){
+    postUpdate :async function(req, res){
         var id = req.body.id;
         var booksnameUpdate = req.body.booksname;
-        db.get('transaction').find({ id: id }).assign({ booksname:booksnameUpdate  }).write();
+        await Transactions.updateOne({_id : id},{ booksName:booksnameUpdate  });
         res.redirect('/transaction')
       },
-    create : function(req, res){
-      var userName = db.get('users').find({id : req.signedCookies.userId}).value().name;
-      var userId = db.get('users').find({id : req.signedCookies.userId}).value().id;
-      var booksName = db.get('sesstion').find({id : req.signedCookies.sessionId}).value();
-        for(var idBook in booksName.cart ){
-          var id = shortid.generate();
-          var pro = db.get('books').find({id : idBook}).value();
-          var bookName = pro.name;
-          db.get('transaction').push({id: id, userName: userName, userId: userId, booksName : bookName, countBook : booksName.cart[idBook]}).write();
-          delete booksName.cart[idBook];
-        }
-        db.get('sesstion').find({id : req.signedCookies.sessionId}).value().numberOfBook = 0;
+    create :async function(req, res){
+      var user = await Users.findById(req.signedCookies.userId);
+       var sessions = await Sessions.findById(req.signedCookies.sessionId);
+      var userName = user.name;
+      var booksName = await Sessions.findById(req.signedCookies.sessionId);
+      var books = [ ...sessions.cart.entries()];
+      for (const key of books) {
+        var pro = await Books.findById(key[0]);
+        var bookName = pro.name;
+        await Transactions.insertMany({userName: userName, booksName : bookName, countBook : key[1],isComplete: false});
+      }
+      await Sessions.updateOne({_id: req.signedCookies.sessionId}, {numberOfBook : 0,cart : {}});
       res.redirect('/')
       },
-    complete : function(req, res){
+    complete : async function(req, res){
         var id = req.params.id;
-        var errors = [];
-        if(db.get('transaction').find({ id: id }).value() === undefined){
-            errors.push("Transaction is required")
-        }
-        if(errors.length){
-          res.render('transaction/index',{
-            transactions : db.get('transaction').value(),
-            errors : errors
-          })
-          return;
-        }
-        db.get('transaction').find({ id: id }).assign({ isComplete: true  }).write();
+        // var transaction = await Transactions.find();
+        // var errors = [];
+        // if(! await Transactions.findById(id)){
+        //     errors.push("Transaction is required")
+        // }
+        // if(errors.length){
+        //   res.render('transaction/index',{
+        //     transactions : transaction,
+        //     errors : errors
+        //   })
+        //   return;
+        // }
+        await Transactions.updateOne({_id : id},{ isComplete: true  });
         res.redirect('/transaction')
     },
-    uncomplete : function(req, res){
+    uncomplete :async function(req, res){
         var id = req.params.id;
-        db.get('transaction').find({ id: id }).assign({ isComplete: false  }).write();
+        await Transactions.updateOne({_id : id},{ isComplete: false  });
         res.redirect('/transaction')
     }
 }

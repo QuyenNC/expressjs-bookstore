@@ -5,10 +5,11 @@ var userSchema = new Schema({
     name: String,
     password: String,
     email: String,
-    date: { type: Date, default: Date.now },
+    date: Date,
     isAdmin: Boolean,
     wrongLoginCount: Number,
-    avatarUrl: String
+    avatarUrl: String,
+    countRequets:Number
 });
 var Users = mongoose.model('Users', userSchema,"users");
 module.exports = Users;
