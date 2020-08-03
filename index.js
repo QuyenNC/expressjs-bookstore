@@ -60,5 +60,5 @@ app.use('/books',books);
 app.use('/auth',auth);
 app.use('/profile',authRequest.authRequest,profile);
 app.use('/cart',cart);
-app.use('/api',apiTran)
+// app.use('/api',apiTran)
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));

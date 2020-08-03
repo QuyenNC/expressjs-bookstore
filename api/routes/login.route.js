@@ -1,9 +1,9 @@
-var express = require('express');
-var router = express.Router();
+// var express = require('express');
+// var router = express.Router();
 
-//Controller
-var loginController = require("../controller/login.controller");
+// //Controller
+// var loginController = require("../controller/login.controller");
 
-router.post('/login',loginController.postLogin);  
+// router.post('/login',loginController.postLogin);  
 
-module.exports = router;
+// module.exports = router;

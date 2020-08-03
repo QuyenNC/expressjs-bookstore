@@ -13,11 +13,19 @@ var bcrypt = require('bcrypt');
 var saltRounds = 10;
 var wrongPassword = 0 ;
 module.exports = {
-    login :async function(req, res){
-        var sessions = await Sessions.findById(req.signedCookies.sessionId)
-        res.render('auth/login',{
-            session : sessions
-        });
+    login :async function(req, res, next){
+        try{
+            var a;
+            a.b();
+            var sessions = await Sessions.findById(req.signedCookies.sessionId)
+            res.render('auth/login',{
+                session : sessions
+            });
+        } catch (error){
+            res.send('500 Error Handing');
+            next(error);
+        }
+        
     },
     postLogin:async function(req, res){
         var email = req.body.email;
