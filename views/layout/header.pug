@@ -20,7 +20,7 @@ html
                         li(class="nav-item active")
                             a(class="nav-link",href="/") Home
                         li(class="nav-item active")
-                            a(class="nav-link",href="/cart") Cart 
+                            a(class="nav-link",href="/cart") Cart (#{session.numberOfBook})
                         li(class="nav-item active")
                             a(class="nav-link",href="/auth/login") Login
                     else 
@@ -29,13 +29,17 @@ html
                                     a.navbar-brand(href="/")
                                         img(src="/image/favicon.ico",width="30" ,height="30")
                             li(class="nav-item active")
-                                a(class="nav-link",href="/") Home
+                                a(class="nav-link",href="/") Trang chủ
+                            li(class="nav-item active")
+                                a(class="nav-link",href="/shop") Shop
                             li(class="nav-item active")
                                 a(class="nav-link",href="/transaction") Transaction
                             li(class="nav-item active")
                                 a(class="nav-link",href="/cart") Cart (#{session.numberOfBook})
                             li(class="nav-item active")
                                 a(class="nav-link",href="/profile") Profile
+                            li(class="nav-item active")
+                                a(class="nav-link",href="/shop/create") Tạo shop
                         else 
                             li(class="nav-item active")
                                 a.navbar-brand(href="/")
@@ -50,5 +54,7 @@ html
                                 a(class="nav-link",href="/transaction") Transaction
                             li(class="nav-item active")
                                 a(class="nav-link",href="/profile") Profile
+                            li(class="nav-item active")
+                                a(class="nav-link",href="/shop/create") Tạo shop
     .container
         block header

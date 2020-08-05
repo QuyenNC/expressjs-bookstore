@@ -1,0 +1,29 @@
+extends ../layout/header 
+block header
+    if role === 0
+        .center
+            each book in books
+                .box1
+                    img(src=book.coverUrl, alt='')
+                    .content
+                        p= book.name 
+                        p Decription 
+                            span &nbsp; :&nbsp;
+                            i=book.description
+                    a(href="/cart/add/" + book._id )
+                        button(type='button') Add to cart
+    else
+        .d-flex.align-items-center.justify-content-between
+            h1 Books Store
+            a.ml-4.mr-4.btn.btn-primary(href="/books/create") Đăng bài
+        .center
+            each book in books
+                .box1
+                    img(src=book.coverUrl, alt='')
+                    .content
+                        p= book.name 
+                        p Decription 
+                            span &nbsp; :&nbsp;
+                            i=book.description
+                    a(href="/cart/add/" + book._id )
+                        button(type='button') Add to cart

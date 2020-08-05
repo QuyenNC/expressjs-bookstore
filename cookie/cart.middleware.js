@@ -9,6 +9,7 @@ module.exports.shoppingCart = async function(req, res, next){
             signed : true
         });
         session.save();
+        res.redirect("/");
     }
     next();
 };

@@ -19,6 +19,7 @@ var transactions = require('./router/transaction.route');
 var auth = require('./router/auth.route');
 var profile = require('./router/profile.route');
 var cart = require('./router/cart.route');
+var shop = require('./router/shop.route');
 //using nodemail
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
@@ -36,6 +37,7 @@ var db = require('./db')
 var Books = require("./models/books.models");
 var Users = require("./models/users.models.js");
 var Sessions = require("./models/sessions.models.js");
+var Shops = require("./models/shops.models.js");
 //Count cookies
 var cookies = require('./cookie/count.cookie');
 app.use(cookies.countCookie);
@@ -48,17 +50,20 @@ app.get('/',async function(req, res){
   var books = await Books.find();
   var user = await Users.findById(req.signedCookies.userId);
   var sessions = await Sessions.findById(req.signedCookies.sessionId);
+  var shops = await Shops.find();
   res.render('index',{
     session : sessions,
     books: books,
-    users : user
+    users : user,
+    shops: shops
   });
 });
 app.use('/transaction',authRequest.authRequest,transactions);
 app.use('/users',authRequest.authRequest,users);
-app.use('/books',books);
+app.use('/books',authRequest.authRequest,books);
 app.use('/auth',auth);
 app.use('/profile',authRequest.authRequest,profile);
 app.use('/cart',cart);
+app.use('/shop',shop);
 // app.use('/api',apiTran)
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));

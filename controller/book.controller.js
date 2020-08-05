@@ -6,6 +6,7 @@ var fs = require('fs');
 var Books = require("../models/books.models");
 var Users = require("../models/users.models.js");
 var Sessions = require("../models/sessions.models.js");
+var Shops = require("../models/shops.models.js");
 //using cloudinary
 var cloudinary = require('cloudinary').v2;
 cloudinary.config({ 
@@ -82,10 +83,10 @@ module.exports = {
         });
     },
     postCreate: async function(req, res){
-        req.body.id = shortid.generate();
+        req.body.userId = req.signedCookies.userId;
         var coverImg = await cloudinary.uploader.upload(req.file.path);
         req.body.coverUrl = coverImg.url;
-        await Books.insertMany(req.body);
+        await Books.create(req.body);
           fs.unlinkSync(req.file.path);
         res.redirect('/books');
     }

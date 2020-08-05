@@ -1,13 +1,16 @@
 extends ./layout/header 
 block header
     .center
-        each book in books
+        each shop in shops
             .box1
-                img(src=book.coverUrl, alt='')
+                img(src=shop.coverUrl, alt='')
                 .content
-                    p= book.name
-                    h1 $300.00
-                a(href="/cart/add/" + book._id )
-                    button(type='button') Add to cart
+                    p= shop.name 
+                    
+                    p Địa chỉ 
+                        span &nbsp; :&nbsp;
+                        i=shop.adress
+                a(href="/shop/view/" + shop._id  )
+                    button(type='button') Xem shop
     
             

@@ -15,8 +15,6 @@ var wrongPassword = 0 ;
 module.exports = {
     login :async function(req, res, next){
         try{
-            var a;
-            a.b();
             var sessions = await Sessions.findById(req.signedCookies.sessionId)
             res.render('auth/login',{
                 session : sessions

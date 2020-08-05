@@ -1,0 +1,37 @@
+extends ../layout/header 
+block header
+    .container.bootstrap.snippet
+        form#registrationForm.form(action="/shop/create", method="POST",enctype="multipart/form-data")
+            .row
+                .col-sm-10
+                    h1 Tạo shop
+            .row
+                .col-sm-3
+                    .text-center
+                        img.avatar.img-circle.img-thumbnail.mb-5(src ='http://ssl.gstatic.com/accounts/ui/avatar_2x.png', alt='avatar',width = "128",height="128")
+                        input.text-center.center-block.file-upload.ml-5(type='file',name="coverImg")
+                br
+                // /col-3
+                .col-sm-9
+                    ul.nav.nav-tabs
+                        li.active
+                            a(data-toggle='tab', href='#home') Home
+                        
+                    .tab-content
+                        #home.tab-pane.active
+                            .form-group
+                                .col-xs-6
+                                    label(for='name')
+                                        h4 Tên shop
+                                    input#first_name.form-control(type='text', name='name' title='enter your first name if any.')
+                            .form-group
+                                .col-xs-6
+                                    label(for='adress')
+                                        h4 Địa chỉ
+                                    input#email.form-control(type='text', name='adress', title='enter your adress.')
+                            .form-group
+                                .col-xs-12
+                                    br
+                                    button.btn.btn-lg.btn-success(type='submit')
+                                        i.glyphicon.glyphicon-ok-sign
+                                        |  Create
